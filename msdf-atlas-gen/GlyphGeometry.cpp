@@ -6,10 +6,11 @@
 
 namespace msdf_atlas {
 
-GlyphGeometry::GlyphGeometry() : index(), codepoint(), geometryScale(), bounds(), advance(), box() { }
+GlyphGeometry::GlyphGeometry() : index(), codepoint(), geometryScale(), bounds(), advance(), box() {  }
 
-bool GlyphGeometry::load(msdfgen::FontHandle *font, double geometryScale, msdfgen::GlyphIndex index, bool preprocessGeometry) {
+bool GlyphGeometry::load(msdfgen::FontHandle *font, double geometryScale, msdfgen::GlyphIndex index, bool invertY, bool preprocessGeometry) {
     if (font && msdfgen::loadGlyph(shape, font, index, msdfgen::FONT_SCALING_NONE, &advance) && shape.validate()) {
+        shape.inverseYAxis  = invertY;
         this->index = index.getIndex();
         this->geometryScale = geometryScale;
         codepoint = 0;
@@ -36,10 +37,10 @@ bool GlyphGeometry::load(msdfgen::FontHandle *font, double geometryScale, msdfge
     return false;
 }
 
-bool GlyphGeometry::load(msdfgen::FontHandle *font, double geometryScale, unicode_t codepoint, bool preprocessGeometry) {
+bool GlyphGeometry::load(msdfgen::FontHandle *font, double geometryScale, unicode_t codepoint, bool invertY, bool preprocessGeometry) {
     msdfgen::GlyphIndex index;
     if (msdfgen::getGlyphIndex(index, font, codepoint)) {
-        if (load(font, geometryScale, index, preprocessGeometry)) {
+        if (load(font, geometryScale, index, invertY, preprocessGeometry)) {
             this->codepoint = codepoint;
             return true;
         }

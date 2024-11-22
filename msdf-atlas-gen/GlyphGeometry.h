@@ -24,8 +24,8 @@ public:
 
     GlyphGeometry();
     /// Loads glyph geometry from font
-    bool load(msdfgen::FontHandle *font, double geometryScale, msdfgen::GlyphIndex index, bool preprocessGeometry = true);
-    bool load(msdfgen::FontHandle *font, double geometryScale, unicode_t codepoint, bool preprocessGeometry = true);
+    bool load(msdfgen::FontHandle *font, double geometryScale, msdfgen::GlyphIndex index, bool invertY, bool preprocessGeometry = true);
+    bool load(msdfgen::FontHandle *font, double geometryScale, unicode_t codepoint, bool invertY, bool preprocessGeometry = true);
     /// Applies edge coloring to glyph shape
     void edgeColoring(void (*fn)(msdfgen::Shape &, double, unsigned long long), double angleThreshold, unsigned long long seed);
     /// Computes the dimensions of the glyph's box as well as the transformation for the generator function
